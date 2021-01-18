@@ -17,7 +17,7 @@
 # specify the BASE_DISTRO. This should hopefully prevent accidentally using
 # a default, when another distro was desired.
 
-FROM obmc-base:v1
+FROM zeuspan/yocto-container:v1
 
 USER root
 
@@ -35,7 +35,7 @@ RUN userdel -r yoctouser && \
     useradd -N -d /workdir -u 1000 -g 1000 obmc && \
     echo "obmc   ALL=(ALL)       ALL" >> /etc/sudoers 
 
-EXPOSE 22
+#EXPOSE 22
 
 RUN  echo 'obmc:docker' >> /root/passwdfile \
 	&& chpasswd -c SHA512 < /root/passwdfile && \
@@ -43,6 +43,7 @@ RUN  echo 'obmc:docker' >> /root/passwdfile \
 
 USER obmc
 ENV LANG=en_US.UTF-8
+WORKDIR /workdir
 
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 CMD [ "/bin/bash"]
