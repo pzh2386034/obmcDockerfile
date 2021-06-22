@@ -44,6 +44,7 @@ RUN apt-get update && \
         g++-multilib \
         dumb-init\
         openssh-server\
+	libgpm2 libpython3.6 vim vim-common vim-runtime xxd\
         tightvncserver && \
     cp -af /etc/skel/ /etc/vncskel/ && \
     echo "export DISPLAY=1" >>/etc/vncskel/.bashrc && \

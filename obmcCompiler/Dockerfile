@@ -17,7 +17,7 @@
 # specify the BASE_DISTRO. This should hopefully prevent accidentally using
 # a default, when another distro was desired.
 
-FROM zeuspan/yocto-container:v1
+FROM zeuspan/yocto-container:v2
 
 USER root
 
