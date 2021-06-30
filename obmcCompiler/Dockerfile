@@ -29,10 +29,13 @@ RUN which dash &> /dev/null && (\
     echo "Skipping dash reconfigure (not applicable)"
 
 # useradd --create-home --shell /bin/bash  /workdir && \
+
+ENV HOME=/workdir
     
 RUN userdel -r yoctouser && \
     groupadd -g 1000 obmc && \
-    useradd -N -d /workdir -u 1000 -g 1000 obmc && \
+    useradd -N --create-home --home-dir $HOME -u 1000 -g 1000 obmc && \
+    chown -R obmc:obmc $HOME && \
     echo "obmc   ALL=(ALL)       ALL" >> /etc/sudoers 
 
 #EXPOSE 22
@@ -43,7 +46,21 @@ RUN  echo 'obmc:docker' >> /root/passwdfile \
 
 USER obmc
 ENV LANG=en_US.UTF-8
-WORKDIR /workdir
+WORKDIR ${HOME}
+RUN mkdir ${HOME}/.ssh
+
+COPY scripts/build.sh ${HOME}
+COPY scripts/id_rsa   ${HOME}/.ssh
+COPY scripts/known_hosts ${HOME}/.ssh
+
+USER root
+
+RUN chown -R obmc:obmc ${HOME}/.ssh
+
+USER obmc
 
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
-CMD [ "/bin/bash"]
+#CMD ["/bin/bash"]
+CMD ["/bin/bash", "/workdir/build.sh"]
+# docker build -t test:v5 .
+# docker run -it --rm -v /tmp:/opt --net=host test:v5
