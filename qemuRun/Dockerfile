@@ -25,6 +25,6 @@ RUN apt-get update && apt-get install -y \
 RUN mkdir -p /usr/src/openbmc
 COPY tools/qemu-system-arm  /usr/bin/qemu-system-arm
 
-ENTRYPOINT ["qemu-system-arm",  "-m", "256", "-M", "ast2600-evb", "-nographic", "-drive", "file=/usr/share/obmc-phosphor-image-romulus.static.mtd,format=raw,if=mtd", "-net", "nic", "-net", "user,hostfwd=:127.0.0.1:2222-:22,hostfwd=:127.0.0.1:2443-:443,hostname=qemu"]
+ENTRYPOINT ["qemu-system-arm",  "-m", "256", "-M", "ast2600-evb", "-nographic", "-drive", "file=/usr/share/obmc-phosphor-image-romulus.static.mtd,format=raw,if=mtd", "-net", "nic", "-net", "user,hostfwd=:127.0.0.1:2222-:22,hostfwd=:127.0.0.1:2443-:443,hostfwd=:127.0.0.1:2623-:623,hostfwd=:127.0.0.1:22200-:2200,hostname=qemu"]
 # docker run -it --rm -v /wks:/usr/share rqemu:v2 
-# docker run -d -v /wks:/usr/share --net host rqemu:v2
+# docker run -d -v /wks:/usr/share --net host rqemu:v3
