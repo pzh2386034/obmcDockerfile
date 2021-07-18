@@ -22,13 +22,13 @@ COPY Exception.h  /usr/local/include/zdb/
 # cd /source/libzdb &&  ./configure --without-postgresql --without-sqlite --without-oci && make && sudo make install
 
 
-ENV USERNAME=zeuspan
+ENV USERNAME=pan
 ENV HOME=/build
 
 RUN groupadd -g 1002 ${USERNAME} && \ 
     useradd -N --create-home --home-dir $HOME -u 1002 -g 1002 ${USERNAME} && \
     chown -R ${USERNAME}:${USERNAME} $HOME && \
-    echo "zeuspan ALL=(ALL)       ALL" >> /etc/sudoers && echo 'zeuspan:docker' >> /root/passwdfile \
+    echo "pan ALL=(ALL)       ALL" >> /etc/sudoers && echo 'pan:docker' >> /root/passwdfile \
 	&& chpasswd -c SHA512 < /root/passwdfile 
 
 WORKDIR /build
@@ -42,4 +42,4 @@ RUN cd $WORKDIR &&  git clone -b work https://github.com/pzh2386034/bmcweb.git &
 #    ssh-keyscan github.com > ${WORKDIR}/.ssh/known_hosts
 
 CMD ["/bin/bash"]
-# docker run -it --rm --net=host -v /home/zeuspan/source:/build work-test:v4
+# docker run -it --rm --net=host -v /home/pan/source:/build work-test:v4
