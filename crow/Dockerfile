@@ -27,11 +27,7 @@ RUN  echo "pan ALL=(ALL)       ALL" >> /etc/sudoers  && echo 'pan:docker' >> /ro
 WORKDIR /build
 USER $USERNAME
 
-RUN mkdir -p ${HOME}/.ssh && \
-    chmod 0700 ${HOME}/.ssh   &&  echo"${SSH_KEY}"> ${HOME}/.ssh/id_rsa && \
-    chmod 600 ${HOME}/.ssh/id_rsa
-    #\ssh-keyscan github.com > ${HOME}/.ssh/known_hosts
 
 
 CMD ["/bin/bash"]
-# docker run -it --rm --net=host -v /home/pan/wks/webserver:/build --build-arg SSH_KEY=$(cat ~/.ssh/id_rsa) crow-build-pan
+# docker run -it --rm --net=host -v /home/pan/wks/webserver:/build crow-build-pan
