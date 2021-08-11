@@ -27,6 +27,11 @@ RUN  echo "pan ALL=(ALL)       ALL" >> /etc/sudoers  && echo 'pan:docker' >> /ro
 WORKDIR /build
 USER $USERNAME
 
+# openssl genrsa -des3 -out server.key 2048 
+# openssl rsa -in server.key -out server.key 
+# openssl req -new -x509 -key server.key -out ca.crt -days 3650 
+# openssl req -new -key server.key -out server.csr 
+# openssl x509 -req -days 3650 -in server.csr -CA ca.crt -CAkey server.key -CAcreateserial -out server.crt
 
 
 CMD ["/bin/bash"]
