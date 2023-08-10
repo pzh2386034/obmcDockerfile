@@ -1,0 +1,15 @@
+version: '3.7'
+services:
+  futuopend:
+    image: futu-open-d:2.19.1256
+    ports: 
+      - 11111:11111
+    #  - 22222:22222
+      - 33333:33333
+    # environment: 
+    #  - EOPT=-param1=127.0.0.1 -param2=22222
+    volumes:
+      - ${path_futuopend_xml}:/FutuOpenD/FutuOpenD.xml
+    stdin_open: true
+    tty: true
+    restart: always
