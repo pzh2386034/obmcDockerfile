@@ -14,7 +14,7 @@
 # with this program; if not, write to the Free Software Foundation, Inc.,
 # 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
 
-FROM ubuntu:18.04
+FROM ubuntu:22.04
 
 RUN apt-get update && \
     DEBIAN_FRONTEND=noninteractive apt-get install -y \
@@ -29,7 +29,6 @@ RUN apt-get update && \
         build-essential \
         chrpath \
         socat \
-        python \
         python3 \
         xz-utils  \
         locales \
@@ -43,8 +42,8 @@ RUN apt-get update && \
         gcc-multilib\
         g++-multilib \
         dumb-init\
-        openssh-server\
-	libgpm2 libpython3.6 vim vim-common vim-runtime xxd\
+        openssh-server file zstd lz4 bzip2\
+	libgpm2  python3-distutils vim vim-common vim-runtime xxd\
         tightvncserver && \
     cp -af /etc/skel/ /etc/vncskel/ && \
     echo "export DISPLAY=1" >>/etc/vncskel/.bashrc && \
