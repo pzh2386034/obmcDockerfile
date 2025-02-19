@@ -17,10 +17,13 @@
 # specify the BASE_DISTRO. This should hopefully prevent accidentally using
 # a default, when another distro was desired.
 
-FROM zeuspan/yocto-container:v3
+# 首先docker build -t yocto-container .;也可以直接从docker hub中拉取
+# FROM zeuspan/yocto-container:v3
+FROM yocto-container 
 
 USER root
 
+ARG DOWNLOAD="build.sh"
 
 # For ubuntu, do not use dash.
 RUN which dash &> /dev/null && (\
@@ -29,7 +32,8 @@ RUN which dash &> /dev/null && (\
     echo "Skipping dash reconfigure (not applicable)"
 
 # useradd --create-home --shell /bin/bash  /workdir && \
-    
+COPY $DOWNLOAD /usr/bin
+   
 RUN userdel -r yoctouser && \
     groupadd -g 1000 obmc && \
     useradd -N -d /workdir -u 1000 -g 1000 obmc && \
@@ -46,4 +50,5 @@ ENV LANG=en_US.UTF-8
 WORKDIR /workdir
 
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
-CMD [ "/bin/bash"]
+CMD [ "build.sh"]
+#CMD [ "/bin/bash /build.sh"]
